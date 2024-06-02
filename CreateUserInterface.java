@@ -1,9 +1,17 @@
+// Kyle Petersen
+// 06-1-2024
+// CSC372
+// Critical Thinking 3
+
+
 import java.awt.*;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class CreateUserInterface {
+
+    // Globals
     private static JFrame frame = new JFrame();
     private static JTextArea textArea = new JTextArea();
     private static JPanel contentPanel = new JPanel();
@@ -12,27 +20,37 @@ public class CreateUserInterface {
     public static void main(String[] args) {
         JPanel topPanel = new JPanel();
     
+        // Create panels
         createTopPanel(topPanel);
         createContentPanel(contentPanel);
         
+        // Add panels to frame
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(contentPanel, BorderLayout.CENTER);
     
+        // Set frame properties
         frame.setSize(800, 600);
         frame.setVisible(true);
     }
 
     private static void createTopPanel(JPanel panel) {
+        // Flylayout for reactivity
         panel.setLayout(new FlowLayout());
+
+        // Create JButtons
         JButton dateTimeButton = createStyledButton("Date/Time");
         JButton textLogButton = createStyledButton("Text Log");
         JButton changeFrameColorButton = createStyledButton("Change Color to Green Hue");
         changeFrameColorButton.setBackground(currentColor);
         JButton exiButton = createStyledButton("Exit");
+        
+        // Add JButtons to panel
         panel.add(dateTimeButton);
         panel.add(textLogButton);
         panel.add(changeFrameColorButton);
         panel.add(exiButton);
+
+        // Set panel background and border
         panel.setBackground(Color.DARK_GRAY);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -41,9 +59,14 @@ public class CreateUserInterface {
             textArea.setText("Current date and time: " + new java.util.Date());
         });
 
+
+        // Logs the text area to a file
         textLogButton.addActionListener(e -> {
+            // Try catch file writer incase of IOException
             try {
+                // Create new log.txt file
                 FileWriter writer = new FileWriter("log.txt", true);
+                // Write the text area to the file
                 writer.write(textArea.getText() + "\n");
                 writer.close();
             } catch (IOException ex) {
@@ -52,18 +75,27 @@ public class CreateUserInterface {
         });
 
 
+        // Changes the background color of the frame to random green hue
         changeFrameColorButton.addActionListener(e -> {
+            // Change the background color of the content panel to the one display by the button
             contentPanel.setBackground(currentColor);
+            // Sets new random color
             currentColor = getRandomGreenHueColor();
         });
 
+        // Exit Button Action
         exiButton.addActionListener(e -> {
             frame.dispose();
         });
     }
     private static void createContentPanel(JPanel panel) {
+        // Border
         panel.setLayout(new BorderLayout());
+
+        // Create border to display background color
         panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+        // Initial background color of grey
         panel.setBackground(Color.LIGHT_GRAY);
 
         // Add a text area to display date and time
